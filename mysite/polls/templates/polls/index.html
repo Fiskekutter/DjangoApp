@@ -2,12 +2,23 @@
 
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 
+<h1><c>Latest questions</c></h>
 {% if latest_question_list %}
     <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-    {% endfor %}
+        <b>
+            {% for question in latest_question_list %}
+            <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+            {% endfor %}
+        </b>
     </ul>
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+
+<div id="grade1">
+
+</div>
+
+
+
+<iframe allow src="https://www.youtube.com/watch?v=sXQkXXBqj_U" title="youtube" marginwidth=3px marginheight=3px width=640 height=640></iframe> 

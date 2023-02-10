@@ -1,8 +1,25 @@
 body {
-    background: white url("images/background.png") no-repeat;
+    background-color: rgb(32, 31, 45);
+}
+
+#grade1 {
+    height: 200px;
+    width: 200px;
+    background-image: linear-gradient(red, yellow);
 }
 
 li a {
-    color: blue;
+    color: rgba(255, 255, 255, 0.900);
+    font: bold;
+    font-size: 20;
 }
 
+ul b {
+    color: rgba(255, 255, 255, 0.850);
+}
+
+h1 c {
+    font: bold;
+    color:rgba(161, 151, 151, 0.9);
+    font-size: 40;
+}
