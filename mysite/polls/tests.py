@@ -13,6 +13,7 @@ from .models import Question
 class QuestionModelTests(TestCase):
 
     def test_was_published_recently_with_future_question(self):
+        print("Test running for Question Model: test_was_published_recently_with_future_question")
         """
         was_published_recently() returns False for questions whose pub_date
         is in the future.
@@ -22,6 +23,7 @@ class QuestionModelTests(TestCase):
         self.assertIs(future_question.was_published_recently(), False)
         
     def test_was_published_recently_with_old_question(self):
+        print("Test running for Question Model: test_was_published_recently_with_old_question")
         """
         was_published_recently() returns False for questions whose pub_date
         is older than 1 day.
@@ -31,6 +33,7 @@ class QuestionModelTests(TestCase):
         self.assertIs(old_question.was_published_recently(), False)
 
     def test_was_published_recently_with_recent_question(self):
+        print("Test running for Question Model: test_was_published_recently_with_recent_question")
         """
         was_published_recently() returns True for questions whose pub_date
         is within the last day.
@@ -50,6 +53,7 @@ def create_question(question_text, days):
 
 class QuestionIndexViewTests(TestCase):
     def test_no_questions(self):
+        print("Test running for Question Index View: test_no_questions")
         """
         If no questions exist, an appropriate message is displayed.
         """
@@ -59,6 +63,7 @@ class QuestionIndexViewTests(TestCase):
         self.assertQuerysetEqual(response.context['latest_question_list'], [])
 
     def test_past_question(self):
+        print("Test running for Question Index View: test_past_questions")
         """
         Questions with a pub_date in the past are displayed on the
         index page.
@@ -71,6 +76,7 @@ class QuestionIndexViewTests(TestCase):
         )
 
     def test_future_question(self):
+        print("Test running for Question Index View: test_future_questions")
         """
         Questions with a pub_date in the future aren't displayed on
         the index page.
@@ -81,6 +87,7 @@ class QuestionIndexViewTests(TestCase):
         self.assertQuerysetEqual(response.context['latest_question_list'], [])
 
     def test_future_question_and_past_question(self):
+        print("Test running for Question Index View: test_future_question_and_past_question")
         """
         Even if both past and future questions exist, only past questions
         are displayed.
@@ -94,6 +101,7 @@ class QuestionIndexViewTests(TestCase):
         )
 
     def test_two_past_questions(self):
+        print("Test running for Question Index View: test_two_past_questions")
         """
         The questions index page may display multiple questions.
         """
@@ -104,3 +112,26 @@ class QuestionIndexViewTests(TestCase):
             response.context['latest_question_list'],
             [question2, question1],
         )
+
+class QuestionDetailViewTests(TestCase):
+    def test_future_question(self):
+        print("Test running for Question Detail View: test_future_question")
+        """
+        The detail view of a question with a pub_date in the future
+        returns a 404 not found.
+        """
+        future_question = create_question(question_text='Future question.', days=5)
+        url = reverse('polls:detail', args=(future_question.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
+
+    def test_past_question(self):
+        print("Test running for Question Detail View: test_past_question")
+        """
+        The detail view of a question with a pub_date in the past
+        displays the question's text.
+        """
+        past_question = create_question(question_text='Past Question.', days=-5)
+        url = reverse('polls:detail', args=(past_question.id,))
+        response = self.client.get(url)
+        self.assertContains(response, past_question.question_text)

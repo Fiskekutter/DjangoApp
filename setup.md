@@ -16,5 +16,6 @@ python manage.py makemigrations polls
 To perform calls to the model
 python manage.py shell
 
-
+TESTING
+python manage.py test polls
 
