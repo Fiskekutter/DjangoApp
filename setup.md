@@ -10,8 +10,9 @@ RUN DJANGO SERVER
 python manage.py runserver
 
 EXECUTE CHANGES TO MODELS
-python manage.py migrate
 python manage.py makemigrations polls
+python manage.py migrate
+
 
 To perform calls to the model
 python manage.py shell
