@@ -1,5 +1,7 @@
 body {
-    background-color: rgb(32, 31, 45);
+    background-image: url(images/high-res-background.png);
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 #grade1 {

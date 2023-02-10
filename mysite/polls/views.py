@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.http import Http404
 from django.template import loader
 from django.urls import reverse
-from .models import Question, Choice
+from .models import Question, Choice, Stock, Stock_History
 from django.views import generic
 from django.utils import timezone
 
@@ -53,3 +53,12 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+    
+class StockView(generic.TemplateView):
+    model = Stock
+    template_name = 'polls/stock.html'
+    
+    def get_queryset(self):
+        return Stock.objects.get()
+    
+    

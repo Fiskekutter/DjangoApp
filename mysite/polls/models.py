@@ -21,16 +21,22 @@ class Choice(models.Model):
         return self.choice_text
     
     
-    
-#class Stock(models.Model):
-#    #ticker = models.CharField(max_length=64) same as symbol
-#    exchange = models.CharField(max_length=64)
-#    symbol = models.CharField(max_length=64)
-#    name = models.CharField(max_length=200)
-#    price = models.DecimalField()
-#    last_updated = models.DateTimeField('Last Updated')
+class Stock(models.Model):
+    #ticker = models.CharField(max_length=64) same as symbol
+    exchange = models.CharField(max_length=64)
+    symbol = models.CharField(max_length=64)
+    name = models.CharField(max_length=200)
+    price = models.DecimalField(decimal_places=1, max_digits=20)
+    last_updated = models.DateTimeField('Last Updated')
+    def __str__(self):
+        return self.name
 
-#class Stock_History(models.Models):
-#    stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
-#    opening_price = models.DecimalField(max_digits=200)
-#    closing_price = models.DecimalField(max_digits=200)
+class Stock_History(models.Model):
+    stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
+    date = models.DateTimeField('date recorded')
+    opening_price = models.DecimalField(max_digits=20, decimal_places=1)
+    closing_price = models.DecimalField(max_digits=20, decimal_places=1)
+    def __init__(self):
+        self.date = timezone.now()
+    def __str__(self):
+        return self.stock.name
