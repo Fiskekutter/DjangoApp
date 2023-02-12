@@ -25,7 +25,7 @@ class Stock(models.Model):
     #ticker = models.CharField(max_length=64) same as symbol
     exchange = models.CharField(max_length=64)
     symbol = models.CharField(max_length=64)
-    name = models.CharField(max_length=200)
+    company_name = models.CharField(max_length=200)
     price = models.DecimalField(decimal_places=1, max_digits=20)
     last_updated = models.DateTimeField('Last Updated')
     def __str__(self):
