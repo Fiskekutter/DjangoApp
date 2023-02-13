@@ -9,7 +9,7 @@ import numpy as np
 class stock_api_data_collector():
     url = "something"
     prefix = "#232"
-    ticker = []
+    #ticker = []
     start_date = '2010-01-01'
     end_date = '2016-12-31'
     
@@ -45,7 +45,7 @@ class stock_api_data_collector():
         df = df.drop(0)
         df = df.reset_index(drop=True)
         
-    def historical(self):
+    def historical(self, ticker):
         historiscal_url= f'https://finance.yahoo.com/quote/{ticker}/history?p={ticker}'
         historiscal_data = self.get_data(historiscal_url)
         data = historiscal_data[0]
