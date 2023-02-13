@@ -8,6 +8,7 @@ from django.utils import timezone
 from django.urls import reverse
 
 from .models import Question
+import stock_api_data_collector
 
 
 class QuestionModelTests(TestCase):
@@ -135,3 +136,9 @@ class QuestionDetailViewTests(TestCase):
         url = reverse('polls:detail', args=(past_question.id,))
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
+        
+class test_api(TestCase):
+    def test(self):
+        x = stock_api_data_collector.stock_api_data_collector()
+        x.get_stock_data('aapl')
+        print(x.data)
