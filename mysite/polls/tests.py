@@ -9,6 +9,9 @@ from django.urls import reverse
 
 from .models import Question
 from polls import fetcher
+import requests
+from bs4 import BeautifulSoup
+import time
 
 
 class QuestionModelTests(TestCase):
@@ -138,7 +141,21 @@ class QuestionDetailViewTests(TestCase):
         self.assertContains(response, past_question.question_text)
         
 class test_api(TestCase):
-    def test(self):
+    def test_fetch_single(self):
         x = fetcher.stock_api_data_collector_class()
         x.get_stock_data('aapl')
-        print(x.data)
+        #print(x.data)
+        
+    def test_fetch_historical(self):
+        x = fetcher.stock_api_data_collector_class()
+        print(x.get_stock_history_all('aapl'))
+        
+    def test_tickers_sp500(self):
+        x = fetcher.stock_api_data_collector_class()
+        #print(x.ticker)
+        
+    def test_html_fetch(self):
+        x = fetcher.stock_api_data_collector_class()
+        print(x.get_current_stock_price('aapl'))
+    
+        
