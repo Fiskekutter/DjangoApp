@@ -8,7 +8,7 @@ from django.utils import timezone
 from django.urls import reverse
 
 from .models import Question
-import stock_api_data_collector
+from polls import fetcher
 
 
 class QuestionModelTests(TestCase):
@@ -139,6 +139,6 @@ class QuestionDetailViewTests(TestCase):
         
 class test_api(TestCase):
     def test(self):
-        x = stock_api_data_collector.stock_api_data_collector()
+        x = fetcher.stock_api_data_collector_class()
         x.get_stock_data('aapl')
         print(x.data)

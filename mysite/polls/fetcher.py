@@ -6,7 +6,7 @@ import requests
 import numpy as np
 
 
-class stock_api_data_collector():
+class stock_api_data_collector_class():
     url = "something"
     prefix = "#232"
     #ticker = []
@@ -14,7 +14,7 @@ class stock_api_data_collector():
     end_date = '2016-12-31'
     data = {}
     
-    def __init__():
+    def __init__(self):
         print('yes')
     
     def get_tickers(self):
@@ -48,7 +48,8 @@ class stock_api_data_collector():
         df.columns = df.iloc[0]
         df = df.drop(0)
         df = df.reset_index(drop=True)
-        return self.assign_data(df)
+        #return self.pop_assign_data(df.to_dict())
+        return self.assign_data(df.to_dict())
         
     def historical(self, ticker):
         historiscal_url= f'https://finance.yahoo.com/quote/{ticker}/history?p={ticker}'
@@ -57,28 +58,30 @@ class stock_api_data_collector():
         data = data.iloc[:-1 , :]
         data = data[data["Open"].str.contains("Dividend") == False]
         
-    def assign_data(stock_info):
-        stock_data = {'previous close': [], 
-                      'open': [], 
-                      'bid': [], 
-                      'ask': [], 
-                      'days range': [], 
-                      '52 week range': [], 
-                      'volume': [], 
-                      'avg. volume': [], 
-                      'Market Cap': [], 
-                      'beta (5Y Monthly)': [], 
-                      'PE Ratio (TTM)': [],
-                      'EPS (TTM)': [],
-                      'Earnings Date': [],
-                      'Forward Dividend & Yield': [],
-                      'ex-Dividend Date': [], 
-                      '1y Target Est': []}
-        for item in range(len(stock_data)):
-            stock_data[item].append(stock_info[item])
+    def assign_data(self, stock_info):
+        stock_data = {'Previous Close': '', 
+                      'Open': '', 
+                      'Bid': '', 
+                      'Ask': '', 
+                      'Day\'s Range': '', 
+                      '52 Week Range': '', 
+                      'Volume': '', 
+                      'Avg. Volume': '', 
+                      'Market Cap': '', 
+                      'Beta (5Y Monthly)': '', 
+                      'PE Ratio (TTM)': '',
+                      'EPS (TTM)': '',
+                      'Earnings Date': '',
+                      'Forward Dividend & Yield': '',
+                      'Ex-Dividend Date': '', 
+                      '1y Target Est': ''}
+        for item in stock_data:
+            stock_data[item] = stock_info[item][0]
         return stock_data
             
-            
-        
+    def pop_assign_data(self, stock_info): #Not working
+        for item in stock_info:
+            item.update(item.pop(0, {}))
+        return stock_info
         
     
