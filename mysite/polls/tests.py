@@ -14,6 +14,7 @@ from bs4 import BeautifulSoup
 import time
 
 
+
 class QuestionModelTests(TestCase):
 
     def test_was_published_recently_with_future_question(self):
@@ -158,4 +159,6 @@ class test_api(TestCase):
         x = fetcher.stock_api_data_collector_class()
         print(x.get_current_stock_price('aapl'))
     
-        
+    def test_html_scroller(self):
+        x = fetcher.stock_api_data_collector_class()
+        print(x.html_scroller('aapl'))
