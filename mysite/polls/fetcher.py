@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 import time
 import datetime
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 
 class stock_api_data_collector_class():
@@ -25,7 +26,6 @@ class stock_api_data_collector_class():
     def get_tickers(self):
         table=pd.read_html('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies')
         df = table[0]
-        #df.to_csv('S&P500-Info.csv')
         dic = df.to_dict("list")
         self.ticker = dic["Symbol"]
     
@@ -62,18 +62,33 @@ class stock_api_data_collector_class():
         #return self.pop_assign_data(df.to_dict())
         return self.assign_data(df.to_dict())
         
-    def historical(self, ticker):
+    def historical(self, ticker): #only return 100 values because of html problems
         historiscal_url= f'https://finance.yahoo.com/quote/{ticker}/history?p={ticker}'
         historiscal_data = self.get_data(historiscal_url)
         data = historiscal_data[0]
         data = data.iloc[:-1 , :]
         data = data[data["Open"].str.contains("Dividend") == False]
         return data
+
+    def html_scroller(self, ticker):
+        now = datetime.datetime.now()
+        today = str(int(time.mktime(now.timetuple())))
+        driver = webdriver.Firefox()
+        driver.implicitly_wait(10)
+        driver.get(f'https://finance.yahoo.com/quote/{ticker}/history?period1=0&period2={today}&interval=1d&filter=history&frequency=1d&includeAdjustedClose=true')
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")  
+        values = driver.find_elements(By.TAG_NAME, 'span')
+        #soup = BeautifulSoup(driver.page_source, 'html.parser')
+        #values = soup.find_all('span').__str__()
+        #driver.quit()
+        return values.__str__()
+        
+        
     
     def get_stock_history_all(self, ticker):
         now = datetime.datetime.now()
         today = str(int(time.mktime(now.timetuple())))
-        print(today)
+        #print(today)
         historiscal_url= f'https://finance.yahoo.com/quote/{ticker}/history?period1=0&period2={today}&interval=1d&filter=history&frequency=1d&includeAdjustedClose=true'
         historiscal_data = self.get_data(historiscal_url)
         data = historiscal_data[0]
