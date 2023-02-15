@@ -81,9 +81,7 @@ class stock_api_data_collector_class():
         #soup = BeautifulSoup(driver.page_source, 'html.parser')
         #values = soup.find_all('span').__str__()
         #driver.quit()
-        return values.__str__()
-        
-        
+        return values.__str__()   
     
     def get_stock_history_all(self, ticker):
         now = datetime.datetime.now()

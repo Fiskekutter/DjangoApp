@@ -1,8 +1,8 @@
-body {
+/*body {
     background-image: url(images/high-res-background.png);
     background-size: cover;
     background-repeat: no-repeat;
-}
+}*/
 
 #grade1 {
     height: 200px;
@@ -11,17 +11,69 @@ body {
 }
 
 li a {
-    color: rgba(255, 255, 255, 0.900);
+    color: rgba(255, 0, 0, 0.9);
     font: bold;
     font-size: 20;
 }
 
 ul b {
-    color: rgba(255, 255, 255, 0.850);
+    color: rgba(255, 0, 0, 0.85);
 }
 
-h1 c {
+h1 c{
     font: bold;
-    color:rgba(161, 151, 151, 0.9);
+    color:rgba(255, 0, 0, 0.9);
     font-size: 40;
+}
+
+/* styling navlist */
+.navlist{
+    background-color: #d90000;
+    position: absolute;
+    width: 100%;
+}
+
+/* styling navlist anchor element */
+navlist a {
+    float: right;
+    display: block;
+    color: #ffffff;
+    text-align: center;
+    padding: 125px;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.navlist-right {
+    float: right;
+}
+
+/* hover effect of navlist anchor element */
+.navlist a:hover {
+    background-color: #83ce21;
+    color: black;
+}
+
+/* styling search bar */
+.search input[type=text] {
+    width: 300px;
+    height: 25px;
+    border-radius: 25px;
+    border: none;
+}
+
+.search {
+    float: right;
+    margin: 17px;
+}
+
+.search button {
+    background-color: #0074D9;
+    color: #f2f2f2;
+    float: right;
+    padding: 5px 10px;
+    margin-right: 16px;
+    font-size: 12px;
+    border: none;
+    cursor: pointer;
 }

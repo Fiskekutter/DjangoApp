@@ -61,4 +61,7 @@ class StockView(generic.TemplateView):
     def get_queryset(self):
         return Stock.objects.get()
     
+    def display_stonks(self):
+        
+        return 0
     
