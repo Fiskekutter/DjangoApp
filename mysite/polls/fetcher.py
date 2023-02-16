@@ -70,7 +70,7 @@ class stock_api_data_collector_class():
         data = data[data["Open"].str.contains("Dividend") == False]
         return data
 
-    def html_scroller(self, ticker):
+    def html_scroller(self, ticker): #Does not work properly
         now = datetime.datetime.now()
         today = str(int(time.mktime(now.timetuple())))
         driver = webdriver.Firefox()
@@ -83,7 +83,7 @@ class stock_api_data_collector_class():
         #driver.quit()
         return values.__str__()   
     
-    def get_stock_history_all(self, ticker):
+    def get_stock_history_all(self, ticker):#Not Working right now
         now = datetime.datetime.now()
         today = str(int(time.mktime(now.timetuple())))
         #print(today)

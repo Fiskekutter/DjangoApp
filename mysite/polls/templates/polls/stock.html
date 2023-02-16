@@ -2,38 +2,25 @@
 
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 
-    <!-- Navbar items -->
-    <div id="navlist" style="color:black">
-        <a href="#">Home</a>
-         
-        <!-- search bar right align -->
-        <div class="search">
-            <form action="#">
-                <input type="text"
-                    placeholder=" Search Courses"
-                    name="search">
-                <button>
-                    <i class="fa fa-search"
-                        style="font-size: 18px;">
-                    </i>
-                </button>
-            </form>
-        </div>
-    </div>
-     
-    <!-- logo with tag -->
-    <div class="content">
-        <h1 style="color:green; padding-top:40px;">
-            GeeksforGeeks
-        </h1>
-         
+<div class="topnav">
+    <a class="active" href="">Home</a>
+      <form action="/polls/stocks">
+        <input type="text" class="search" placeholder="Search..." name="search">
+        <button type="submit"><i></i></button>
+      </form>
+</div>
+
+<div class="ticker">
+    <h1><c>TICKERS</c></h1>
+    {% if all_tickers %}
+    <ul>
         <b>
-            A Computer Science
-            Portal for Geeks
+            {% for items in all_tickers %}
+            <li><a>{{ items.sp500_tickers }}</a></li>
+            {% endfor %}
         </b>
-    </div>
-<h1>
-    <c>
-        yoyoyoyoyoyoyoyoyoy
-    </c>
-</h1>
+    </ul>
+</div>
+{% else %}
+    <p>No tickers available.</p>
+{% endif %}

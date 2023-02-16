@@ -3,10 +3,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.http import Http404
 from django.template import loader
 from django.urls import reverse
-from .models import Question, Choice, Stock, Stock_History
+from .models import Question, Choice, Stock, Stock_History, Tickers
 from django.views import generic
 from django.utils import timezone
-
+from polls import fetcher
 
 
 class IndexView(generic.ListView):
@@ -54,14 +54,20 @@ def vote(request, question_id):
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
     
-class StockView(generic.TemplateView):
-    model = Stock
+class StockView(generic.ListView):
+    model = Tickers
     template_name = 'polls/stock.html'
+    context_object_name = "all_tickers"
+    def __init__(self):
+        if Tickers.objects.exists() == False:
+            fetch = fetcher.stock_api_data_collector_class()
+            for item in fetch.ticker:
+                x = Tickers(sp500_tickers=item)
+                x.save()           
     
     def get_queryset(self):
-        return Stock.objects.get()
+        return Tickers.objects.all()
     
     def display_stonks(self):
-        
         return 0
     

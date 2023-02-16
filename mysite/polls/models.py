@@ -20,6 +20,11 @@ class Choice(models.Model):
     def __str__(self):
         return self.choice_text
     
+ 
+class Tickers(models.Model):
+    sp500_tickers = models.CharField(max_length=30)
+    def __str__(self):
+        return self.sp500_tickers
     
 class Stock(models.Model):
     #ticker = models.CharField(max_length=64) same as symbol
