@@ -11,7 +11,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 
-class stock_api_data_collector_class():
+class stock_api_data_collector_class(): #Yahoo
     _headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}
     url = "something"
     prefix = "#232"
@@ -120,4 +120,8 @@ class stock_api_data_collector_class():
             item.update(item.pop(0, {}))
         return stock_info
         
+        
+class iextrading_fetcher(): #Not developed
+    tickers = []
+    url = "https://cloud.iexapis.com/stable/stock/aapl/quote?token=YOUR_TOKEN_HERE"
     

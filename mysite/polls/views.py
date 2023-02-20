@@ -62,12 +62,23 @@ class StockView(generic.ListView):
         if Tickers.objects.exists() == False:
             fetch = fetcher.stock_api_data_collector_class()
             for item in fetch.ticker:
-                x = Tickers(sp500_tickers=item)
+                x = Tickers(sp500_tickers=item, price=fetch.get_current_stock_price(item))
                 x.save()           
     
     def get_queryset(self):
-        return Tickers.objects.all()
+        fetch = fetcher.stock_api_data_collector_class()
+        items = Tickers.objects.all()
+        for item in items[:5]:
+            item.price = fetch.get_current_stock_price(item.sp500_tickers)
+            item.save()
+        return Tickers.objects.all()[:2]
+
+class StockDetails(generic.ListView):
+    model = Tickers
+    template_name = 'polls/stockdetails.html'
+    def get_queryset(self):
+        return Tickers.objects.filter(sp500_tickers="")
     
-    def display_stonks(self):
-        return 0
-    
+def stockdetails(sp500_tickers):
+    ticker = get_object_or_404(Tickers, stock_name=sp500_tickers)
+    return HttpResponseRedirect(reverse('polls:stockdetails', args=(ticker.sp500_tickers,)))

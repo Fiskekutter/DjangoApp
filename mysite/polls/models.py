@@ -23,6 +23,7 @@ class Choice(models.Model):
  
 class Tickers(models.Model):
     sp500_tickers = models.CharField(max_length=30)
+    price = models.DecimalField(decimal_places=2, max_digits=20, default=0)
     def __str__(self):
         return self.sp500_tickers
     
@@ -31,7 +32,7 @@ class Stock(models.Model):
     exchange = models.CharField(max_length=64)
     symbol = models.CharField(max_length=64)
     company_name = models.CharField(max_length=200)
-    price = models.DecimalField(decimal_places=1, max_digits=20)
+    price = models.DecimalField(decimal_places=2, max_digits=20)
     last_updated = models.DateTimeField('Last Updated')
     def __str__(self):
         return self.name
