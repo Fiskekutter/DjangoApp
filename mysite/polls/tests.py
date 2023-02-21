@@ -144,12 +144,12 @@ class QuestionDetailViewTests(TestCase):
 class test_api(TestCase):
     def test_fetch_single(self):
         x = fetcher.stock_api_data_collector_class()
-        x.get_stock_data('aapl')
+        #x.get_stock_data('aapl')
         #print(x.data)
         
     def test_fetch_historical(self):
         x = fetcher.stock_api_data_collector_class()
-        print(x.get_stock_history_all('aapl'))
+        #print(x.get_stock_history_all('aapl'))
         
     def test_tickers_sp500(self):
         x = fetcher.stock_api_data_collector_class()
@@ -157,8 +157,14 @@ class test_api(TestCase):
         
     def test_html_fetch(self):
         x = fetcher.stock_api_data_collector_class()
-        print(x.get_current_stock_price('aapl'))
+        #print(x.get_current_stock_price('aapl'))
     
     def test_html_scroller(self):
         x = fetcher.stock_api_data_collector_class()
-        print(x.html_scroller('aapl'))
+        #print(x.html_scroller('aapl'))
+    
+    def test_download_historical_data(self):
+        x = fetcher.stock_api_data_collector_class()
+        #x.download_historical_data(ticker)
+        x.download_historical_data('aapl')
+        #print("\\")

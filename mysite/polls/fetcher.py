@@ -9,6 +9,14 @@ import time
 import datetime
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.webdriver.remote.webelement import WebElement
+import os
+import shutil
+
 
 
 class stock_api_data_collector_class(): #Yahoo
@@ -19,6 +27,8 @@ class stock_api_data_collector_class(): #Yahoo
     start_date = '2010-01-01'
     end_date = '2016-12-31'
     data = {}
+    search_path = "C:\\Users\\45311\\Downloads\\"
+    file_storage = "C:\\Users\\45311\\Documents\\Source\\DjangoApp\\mysite\\polls\\files\\"
     
     def __init__(self):
         self.get_tickers()
@@ -70,19 +80,73 @@ class stock_api_data_collector_class(): #Yahoo
         data = data[data["Open"].str.contains("Dividend") == False]
         return data
 
-    def html_scroller(self, ticker): #Does not work properly
+    def html_scroller(self, ticker): #Works but is slow, use download_historical_data instead
         now = datetime.datetime.now()
         today = str(int(time.mktime(now.timetuple())))
         driver = webdriver.Firefox()
-        driver.implicitly_wait(10)
+        driver.implicitly_wait(3)
+        
         driver.get(f'https://finance.yahoo.com/quote/{ticker}/history?period1=0&period2={today}&interval=1d&filter=history&frequency=1d&includeAdjustedClose=true')
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")  
+        driver.find_element(By.XPATH, "/html/body/div/div/div/div/form/div[2]/div[2]/button").click()
+        driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div[1]/div/div[4]/div/div/div[1]/div/div/div/div/div/section/button[2]").click()
+        
+        #element = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div[1]/div/div[3]/div[1]/div/div[2]/div/div/section/div[2]/table/tbody/tr[10719]/td[1]/span")
+        #element = element.__str__().replace("<", '').replace(">",'')
+        #driver.execute_script(f"{element}.scrollIntoView()")
+        #driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+        
+        long_xpath= "/html/body/div[1]/div/div/div[1]/div/div[3]/div[1]/div/div[2]/div/div/section/div[2]/table/tbody/tr[10719]/td[1]/span" #Too specific
+        driver.implicitly_wait(0.1)
+        check = True
+        while(check):
+            try:
+                WebDriverWait(driver, 0.1).until(lambda x: x.find_element(By.XPATH, long_xpath).is_displayed())
+            except(TimeoutException):
+                driver.execute_script("window.scrollBy(0, 3000000)")
+            else:
+                check = False
+            
+            
         values = driver.find_elements(By.TAG_NAME, 'span')
         #soup = BeautifulSoup(driver.page_source, 'html.parser')
         #values = soup.find_all('span').__str__()
         #driver.quit()
-        return values.__str__()   
+        return values[0].__str__()
     
+    def download_historical_data(self, ticker):
+        now = datetime.datetime.now()
+        today = str(int(time.mktime(now.timetuple())))
+        driver = webdriver.Firefox()
+        driver.implicitly_wait(5)
+        driver.get(f'https://finance.yahoo.com/quote/{ticker}/history?period1=0&period2={today}&interval=1d&filter=history&frequency=1d&includeAdjustedClose=true')
+        self.html_find_data(driver)
+        
+        ticker = ticker.upper() + ".csv"
+        time.sleep(2)
+        self.copy_file_to_destination(self.search_path + ticker, self.file_storage + ticker)
+        driver.close()
+        
+    def copy_file_to_destination(self, src_path, dst_path):
+        if(not os.path.isfile(dst_path)):
+            shutil.copy(src_path, dst_path)
+        if(os.path.isfile(src_path)):
+            os.remove(src_path)
+        
+    def html_find_data(self, driver):
+        try:
+            driver.find_element(By.XPATH, "/html/body/div/div/div/div/form/div[2]/div[2]/button").click() #cookies
+        except(NoSuchElementException):
+            pass
+        try:
+            driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div[1]/div/div[4]/div/div/div[1]/div/div/div/div/div/section/button[2]").click() #popup
+        except(NoSuchElementException):
+            pass
+        driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div[1]/div/div[3]/div[1]/div/div[2]/div/div/section/div[1]/div[1]/div[1]/div/div/div").click() #Date popup
+        driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div[1]/div/div[3]/div[1]/div/div[2]/div/div/section/div[1]/div[1]/div[1]/div/div/div[2]/div/ul[2]/li[4]/button").click() #Max
+        #driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div[1]/div/div[3]/div[1]/div/div[2]/section/div[1]/div[1]/div[1]/div/div/div[2]/div/div[3]/button[1]").click() #done
+        #driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div[1]/div/div[3]/div[1]/div/div[2]/div/div/section/div[1]/div[1]/button").click() #apply
+        driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div[1]/div/div[3]/div[1]/div/div[2]/div/div/section/div[1]/div[2]/span[2]/a").click() #Download
+        
     def get_stock_history_all(self, ticker):#Not Working right now
         now = datetime.datetime.now()
         today = str(int(time.mktime(now.timetuple())))
