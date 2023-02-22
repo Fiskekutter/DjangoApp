@@ -21,17 +21,19 @@ li a {
 
 ul > li a{
     display: inline-block;
+    position: inherit;
     /* You can also add some margins here to make it look prettier */
 }
 
 ul b {
-    color: rgba(255, 0, 0, 0.85);
+    color: rgba(92, 238, 116, 0.85);
 }
 
 h1 a{
     font: bold;
     color:rgb(128, 120, 245);
     font-size: 40;
+    position: fixed;
 }
 
 .back button{
@@ -40,19 +42,19 @@ h1 a{
     padding: 10px 10px;
 }
 
-.tag1 a{
+.tag a{
     color: rgb(128, 120, 245);
     position: absolute;
     font-size: 20px;
 }
 
-.tag1 a:link{
+.tag a:link{
     color: white;
     background-color: transparent;
     text-decoration: none;
 }
 
-.tag1 a:visited {
+.tag a:visited {
     color: rgb(101, 67, 255);
     background-color: transparent;
     text-decoration: none;
@@ -61,34 +63,10 @@ h1 a{
 
 .topnav {
     overflow: hidden;
+    float: left;
+    border-color: #1b1b5e;
+    background-color: #1b1b5e;
   }
-  
-.topnav a {
-    float: left;
-    display: block;
-    color: black;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-    font-weight: bold;
-}
-
-.topnav a.active {
-    background-color: #2ec907;
-    color: rgb(0, 0, 0);
-    border-radius: 35%;
-}
-
-.topnav a:hover {
-    background-color: #2ec907a6;
-    color: black;
-    border-radius: 15%;
-}
-
-.topnav{
-    float: left;
-}
 
 .topnav input[type=text] {
     padding: 6px;
@@ -99,28 +77,20 @@ h1 a{
     text-indent: 3%;
 }
 
-input.search {
-    color:white;
-}
-
 input::placeholder {
-    color:white;
-}
-
-input::backdrop {
-    color:white;
+    color:rgb(131, 110, 247);
 }
 
 .topnav button {
     float: right;
-    padding: 12px;
+    padding: 16px;
     margin-top: 10px;
     margin-right: 10px;
     margin-left: 7px;
-    font-size: 17px;
     border: none;
     cursor: pointer;
     background-image: url(images/search.png);
+    background-color: #2e2e66;
     background-repeat: no-repeat;
     background-size: 100%;
 }
@@ -133,10 +103,47 @@ input::backdrop {
     border-radius: 35%;
 }
 
-
 .ticker {
     float: left;
     position: absolute;
     padding: 1px;
-    margin-top: 100px;
+    margin-top: 50px;
 }
+
+.ticker p {
+    font-size: 20px;
+    color:#1b325e;
+    position: relative;
+    margin: 2px;
+    padding-left: 2px;
+}
+
+.ticker h1.title{
+    font: bold;
+    color:rgb(128, 120, 245);
+    font-size: 40;
+}
+
+.ticker a:link{
+    color: rgb(128, 120, 245);
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.ticker a:visited {
+    color: rgb(128, 120, 245);
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.ticker a:hover {
+    color: rgba(128, 120, 245, 0.753);
+    background-color: transparent;
+    text-decoration: underline;
+  }
+  
+.ticker a:active {
+    color: rgb(128, 120, 245);
+    background-color: transparent;
+    text-decoration: underline;
+  }

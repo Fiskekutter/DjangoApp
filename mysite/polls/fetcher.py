@@ -53,7 +53,7 @@ class stock_api_data_collector_class(): #Yahoo
     def get_data(self, url):
         try:
             pepe = requests.get(url,headers = self._headers)
-            table = pd.read_html(.text)
+            table = pd.read_html(pepe.text)
         except(TypeError, ValueError) as e:
             print(e.__str__())
             return "Error"
