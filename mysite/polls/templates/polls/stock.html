@@ -3,21 +3,23 @@
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 
 <div class="topnav">
-    <a class="active" href="">Home</a>
       <form action="" method="get">
         {% csrf_token %}
-        <input type="text" class="search" placeholder="Search...">
-        <button type="submit"></button>
+        <fieldset class="search">
+            <label for="path">Search:</label>
+            <input type="text" class="search" placeholder="Search..." value="{{request.GET.title}}">
+            <button type="submit"></button>
+        </fieldset>
       </form>
 </div>
 
 <div class="ticker">
-    <h1><c>TICKERS</c></h1>
+    <h1><a>TICKERS</a></h1>
     {% if all_tickers %}
     <ul>
         <b>
             {% for item in all_tickers %}
-            <li><a href="{% url 'polls:stockdetails' item.sp500_tickers %}">{{ item.sp500_tickers }}</a></li>
+            <li><a href="{% url 'polls:test' item.sp500_tickers %}" method="post">{{ item.sp500_tickers }}</a></li>
             {% endfor %}
         </b>
     </ul>

@@ -12,6 +12,7 @@ from polls import fetcher
 import requests
 from bs4 import BeautifulSoup
 import time
+import pandas as pd
 
 
 
@@ -144,13 +145,28 @@ class QuestionDetailViewTests(TestCase):
 class test_api(TestCase):
     def test_fetch_single(self):
         x = fetcher.stock_api_data_collector_class()
-        #x.get_stock_data('aapl')
-        #print(x.data)
+        ticker = 'wer'
+        url = f'https://finance.yahoo.com/quote/{ticker}?p={ticker}'
+        yo = x.get_data(url)
+        yo = yo[0]
+        yo = yo[['Symbol']].to_dict()
+        #print(yo)
+        m = []
+        s = 0
+        yo = yo['Symbol']
+        for i in yo:
+            m.append(yo[s])
+            s = s+1
+            
+        print(m)
+
+    
+        #print(yo['Symbol'])
         
     def test_fetch_historical(self):
         x = fetcher.stock_api_data_collector_class()
         #print(x.get_stock_history_all('aapl'))
-        
+    
     def test_tickers_sp500(self):
         x = fetcher.stock_api_data_collector_class()
         #print(x.ticker)
@@ -166,5 +182,5 @@ class test_api(TestCase):
     def test_download_historical_data(self):
         x = fetcher.stock_api_data_collector_class()
         #x.download_historical_data(ticker)
-        x.download_historical_data('aapl')
+        #x.download_historical_data('aapl')
         #print("\\")

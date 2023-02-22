@@ -38,18 +38,11 @@ class stock_api_data_collector_class(): #Yahoo
         df = table[0]
         dic = df.to_dict("list")
         self.ticker = dic["Symbol"]
-    
-    def get_stock_current_price(self, ticker):
-        data = 0
-        return data 
+
         
     def get_stock_data(self, ticker):
         self.data = self.transform_data(ticker)
-    
-    def get_stock_history_period(self, ticker, start_date, end_date):
-        data = 0
-        return data
-         
+             
     def get_current_stock_price(self, ticker):
         resp = requests.get(f'https://finance.yahoo.com/quote/{ticker}?p={ticker}', headers= self._headers)
         soup = BeautifulSoup(resp.content, "html.parser")
@@ -58,8 +51,24 @@ class stock_api_data_collector_class(): #Yahoo
         return float(value)
     
     def get_data(self, url):
-        return pd.read_html(requests.get(url,headers = self._headers).text)
-    
+        try:
+            pepe = requests.get(url,headers = self._headers)
+            table = pd.read_html(.text)
+        except(TypeError, ValueError) as e:
+            print(e.__str__())
+            return "Error"
+           
+    def check_data(self, data): 
+        table = table[0]
+        table = table[['Symbol']].to_dict()
+        list_of_symbols = []
+        iterator = 0
+        table = table['Symbol']
+        for item in table:
+            list_of_symbols.append(item[iterator])
+            iterator  = iterator + 1
+        return table
+        
     def transform_data(self, ticker):
         summary_data = self.get_data(f'https://finance.yahoo.com/quote/{ticker}?p={ticker}')
         data = [summary_data[0], summary_data[1]]
@@ -189,3 +198,7 @@ class iextrading_fetcher(): #Not developed
     tickers = []
     url = "https://cloud.iexapis.com/stable/stock/aapl/quote?token=YOUR_TOKEN_HERE"
     
+    
+class nasdaq_fetcher():
+    symbol = ""
+    price = 0

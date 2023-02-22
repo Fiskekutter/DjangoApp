@@ -2,7 +2,7 @@ body {
     /*background-image: url(images/high-res-background.png);*/
     background-size: cover;
     background-repeat: no-repeat;
-    background-color: #434344;
+    background-color: #1b1b5e;
 }
 
 #grade1 {
@@ -12,20 +12,52 @@ body {
 }
 
 li a {
-    color: rgba(255, 0, 0, 0.9);
+    color: rgb(139, 146, 248);
     font: bold;
     font-size: 20;
+    position: relative;
+    display: inline;
+}
+
+ul > li a{
+    display: inline-block;
+    /* You can also add some margins here to make it look prettier */
 }
 
 ul b {
     color: rgba(255, 0, 0, 0.85);
 }
 
-h1 c{
+h1 a{
     font: bold;
-    color:rgba(255, 0, 0, 0.9);
+    color:rgb(128, 120, 245);
     font-size: 40;
 }
+
+.back button{
+    color:rgb(128, 120, 245);
+    position: absolute;
+    padding: 10px 10px;
+}
+
+.tag1 a{
+    color: rgb(128, 120, 245);
+    position: absolute;
+    font-size: 20px;
+}
+
+.tag1 a:link{
+    color: white;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.tag1 a:visited {
+    color: rgb(101, 67, 255);
+    background-color: transparent;
+    text-decoration: none;
+  }
+
 
 .topnav {
     overflow: hidden;

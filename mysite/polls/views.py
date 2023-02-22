@@ -68,17 +68,34 @@ class StockView(generic.ListView):
     def get_queryset(self):
         fetch = fetcher.stock_api_data_collector_class()
         items = Tickers.objects.all()
-        for item in items[:5]:
-            item.price = fetch.get_current_stock_price(item.sp500_tickers)
-            item.save()
-        return Tickers.objects.all()[:2]
+        #for item in items[:5]:
+            #item.price = fetch.get_current_stock_price(item.sp500_tickers)
+            #item.save()
+        return Tickers.objects.all()
 
 class StockDetails(generic.ListView):
     model = Tickers
     template_name = 'polls/stockdetails.html'
+    context_object_name = "symbols"
+
     def get_queryset(self):
-        return Tickers.objects.filter(sp500_tickers="")
-    
-def stockdetails(sp500_tickers):
-    ticker = get_object_or_404(Tickers, stock_name=sp500_tickers)
+        self.symbol = get_object_or_404(Tickers, sp500_tickers=self.kwargs['sp500_tickers'])
+        stock = Tickers.objects.get(sp500_tickers=self.symbol)
+        fetch = fetcher.stock_api_data_collector_class()
+        stock.price = fetch.get_current_stock_price(stock.sp500_tickers)
+        stock.save()
+        return Tickers.objects.filter(sp500_tickers=self.symbol)
+        
+def stockdetails(request, name):
+    ticker = get_object_or_404(Tickers, sp500_tickers=name)
+    return HttpResponseRedirect(reverse('polls:stockdetails', args=(ticker.sp500_tickers,)))
+
+def search(request, name):
+    try:
+        tick = Tickers.objects.filter(sp500_tickers=request.GET.get('search'))
+    except(Tickers.DoesNotExist):
+        fetch = fetcher.stock_api_data_collector_class()
+        stock_info = fetch.get_stock_data
+        
+    ticker = get_object_or_404(Tickers, sp500_tickers=name)
     return HttpResponseRedirect(reverse('polls:stockdetails', args=(ticker.sp500_tickers,)))
