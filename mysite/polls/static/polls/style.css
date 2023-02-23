@@ -11,40 +11,38 @@ body {
     background-image: linear-gradient(red, yellow);
 }
 
-li a {
-    color: rgb(139, 146, 248);
-    font: bold;
-    font-size: 20;
-    position: relative;
-    display: inline;
+ul b {
+    color: rgba(92, 238, 116, 0.85);
+    position: absolute;
 }
 
-ul > li a{
+
+h1 a{
+    top: 10px;
+    left: 10px;
+    color:rgb(128, 120, 245);
+    position: relative;
+}
+
+.details {
+    position: relative;
+}
+
+.details p{
     display: inline-block;
-    position: inherit;
+    position: relative;
+    color: rgb(128, 120, 245);
+    font-size: 20px;
+    margin: 0px;
     /* You can also add some margins here to make it look prettier */
 }
 
-ul b {
-    color: rgba(92, 238, 116, 0.85);
+.tag {
+    position: relative;
 }
-
-h1 a{
-    font: bold;
-    color:rgb(128, 120, 245);
-    font-size: 40;
-    position: fixed;
-}
-
-.back button{
-    color:rgb(128, 120, 245);
-    position: absolute;
-    padding: 10px 10px;
-}
-
 .tag a{
     color: rgb(128, 120, 245);
-    position: absolute;
+    position: relative;
     font-size: 20px;
 }
 
@@ -58,23 +56,47 @@ h1 a{
     color: rgb(101, 67, 255);
     background-color: transparent;
     text-decoration: none;
-  }
+}
 
+.tag a:hover {
+    color: rgba(128, 120, 245, 0.753);
+    background-color: transparent;
+    text-decoration: underline;
+}
+  
+.tag a:active {
+    color: rgb(128, 120, 245);
+    background-color: transparent;
+    text-decoration: underline;
+}
 
 .topnav {
-    overflow: hidden;
     float: left;
-    border-color: #1b1b5e;
-    background-color: #1b1b5e;
+    background-color: #1b1b5e;  
+    margin: 0px 0px;
+    top: 50px;
+    left: 10px;
+    position: absolute;
+    border-color: transparent;
   }
 
 .topnav input[type=text] {
     padding: 6px;
-    margin-top: 10px;
     font-size: 17px;
-    border: black;
+    border-width: 0px;
     background-color: #ccccdd49;
     text-indent: 3%;
+    position: inherit;
+    float: left;
+}
+
+.topnav fieldset {
+    border-color: transparent;
+    left: 10px;
+}
+
+.topnav form {
+    border-color: transparent;
 }
 
 input::placeholder {
@@ -84,15 +106,14 @@ input::placeholder {
 .topnav button {
     float: right;
     padding: 16px;
-    margin-top: 10px;
     margin-right: 10px;
-    margin-left: 7px;
     border: none;
     cursor: pointer;
     background-image: url(images/search.png);
     background-color: #2e2e66;
     background-repeat: no-repeat;
     background-size: 100%;
+    position: inherit;
 }
 
 .topnav button:hover {
@@ -105,9 +126,18 @@ input::placeholder {
 
 .ticker {
     float: left;
-    position: absolute;
-    padding: 1px;
-    margin-top: 50px;
+    position: relative;
+    top: 70px
+}
+
+.ticker ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
 }
 
 .ticker p {
@@ -116,12 +146,12 @@ input::placeholder {
     position: relative;
     margin: 2px;
     padding-left: 2px;
+    float: left;
 }
 
 .ticker h1.title{
-    font: bold;
     color:rgb(128, 120, 245);
-    font-size: 40;
+    position: relative;
 }
 
 .ticker a:link{
@@ -140,10 +170,10 @@ input::placeholder {
     color: rgba(128, 120, 245, 0.753);
     background-color: transparent;
     text-decoration: underline;
-  }
+}
   
 .ticker a:active {
     color: rgb(128, 120, 245);
     background-color: transparent;
     text-decoration: underline;
-  }
+}

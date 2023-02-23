@@ -1,7 +1,6 @@
 #Create class to collect google or youtube api
 import pandas as pd
 import matplotlib as plt
-from .models import Stock, Stock_History
 import requests
 import numpy as np
 from bs4 import BeautifulSoup
@@ -16,7 +15,6 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.remote.webelement import WebElement
 import os
 import shutil
-
 
 
 class stock_api_data_collector_class(): #Yahoo
@@ -193,6 +191,14 @@ class stock_api_data_collector_class(): #Yahoo
             item.update(item.pop(0, {}))
         return stock_info
         
+    def load_csv(self, ticker):
+        tick = ticker.upper()
+        try:
+            df = pd.read_csv(os.path.dirname(__file__) + f"\\files\\{tick}" + ".csv")
+        except FileNotFoundError as e:
+            print(str(e))
+            return pd.Dataframe()
+        return df
         
 class iextrading_fetcher(): #Not developed
     tickers = []

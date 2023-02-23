@@ -1,27 +1,35 @@
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'polls/images/stonk.png' %}">
+</head>
+<body> 
+    <h1><a>Search for stonks</a></h1>
+        <div class="topnav">
+            <form action="" method="get">
+                <fieldset>
+                    <input type="text" class="search" placeholder="Search..." value="">
+                    <button type="submit"></button>
+                </fieldset>
+            </form>
+        </div>
 
-<div class="topnav">
-    <form action="" method="get">
-        <fieldset>
-            <input type="text" class="search" placeholder="Search..." value="">
-            <button type="submit"></button>
-        </fieldset>
-    </form>
-</div>
-
-<div class="ticker">
-    <h1 class="title">TICKERS</h1>
-    {% if all_tickers %}
-    <ul>
-        <b>
-            {% for item in all_tickers %}
-            <p><a href="{% url 'polls:test' item.sp500_tickers %}">{{ item.sp500_tickers }}</a></p>
-            {% endfor %}
-        </b>
-    </ul>
-</div>
-{% else %}
-    <p>No tickers available.</p>
-{% endif %}
+        <div class="ticker">
+            <h1 class="title">TICKERS</h1>
+                {% if all_tickers %}
+                <ul>
+                    <b>
+                        {% for item in all_tickers %}
+                        <p><a href="{% url 'polls:test' item.sp500_tickers %}">{{ item.sp500_tickers }}</a></p>
+                        {% endfor %}
+                    </b>
+                </ul>
+        </div>
+        {% else %}
+        <p>No tickers available.</p>
+        {% endif %}
+</body>
+</html>

@@ -21,28 +21,28 @@ class Choice(models.Model):
         return self.choice_text
     
  
-class Tickers(models.Model):
-    sp500_tickers = models.CharField(max_length=30)
-    price = models.DecimalField(decimal_places=2, max_digits=20, default=0)
+class Ticker(models.Model):
+    symbol = models.CharField(max_length=30)
     def __str__(self):
-        return self.sp500_tickers
+        return self.symbol
     
 class Stock(models.Model):
-    #ticker = models.CharField(max_length=64) same as symbol
-    exchange = models.CharField(max_length=64)
-    symbol = models.CharField(max_length=64)
+    ticker = models.ForeignKey(Ticker, on_delete=models.CASCADE)
+    #exchange = models.CharField(max_length=64)
     company_name = models.CharField(max_length=200)
-    price = models.DecimalField(decimal_places=2, max_digits=20)
+    price = models.DecimalField(decimal_places=2, max_digits=20, default=0)
     last_updated = models.DateTimeField('Last Updated')
+    def __init__(self) -> None:
+        self.last_updated = timezone.now()
+    def update_date(self):
+        self.last_updated = timezone.now()
     def __str__(self):
-        return self.name
+        return self.company_name + ": " + str(self.price)
 
 class Stock_History(models.Model):
     stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
     date = models.DateTimeField('date recorded')
-    opening_price = models.DecimalField(max_digits=20, decimal_places=1)
-    closing_price = models.DecimalField(max_digits=20, decimal_places=1)
-    def __init__(self):
-        self.date = timezone.now()
+    opening_price = models.DecimalField(max_digits=20, decimal_places=1, default=0)
+    closing_price = models.DecimalField(max_digits=20, decimal_places=1, default=0)
     def __str__(self):
-        return self.stock.name
+        return self.stock.company_name

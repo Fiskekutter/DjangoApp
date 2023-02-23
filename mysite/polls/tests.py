@@ -145,22 +145,20 @@ class QuestionDetailViewTests(TestCase):
 class test_api(TestCase):
     def test_fetch_single(self):
         x = fetcher.stock_api_data_collector_class()
-        ticker = 'wer'
-        url = f'https://finance.yahoo.com/quote/{ticker}?p={ticker}'
-        yo = x.get_data(url)
-        yo = yo[0]
-        yo = yo[['Symbol']].to_dict()
-        #print(yo)
-        m = []
-        s = 0
-        yo = yo['Symbol']
-        for i in yo:
-            m.append(yo[s])
-            s = s+1
+        #ticker = 'wer'
+        #url = f'https://finance.yahoo.com/quote/{ticker}?p={ticker}'
+        #yo = x.get_data(url)
+        #yo = yo[0]
+        #yo = yo[['Symbol']].to_dict()
+        ##print(yo)
+        #m = []
+        #s = 0
+        #yo = yo['Symbol']
+        #for i in yo:
+        #    m.append(yo[s])
+        #    s = s+1
             
-        print(m)
-
-    
+        #print(m)
         #print(yo['Symbol'])
         
     def test_fetch_historical(self):
@@ -184,3 +182,7 @@ class test_api(TestCase):
         #x.download_historical_data(ticker)
         #x.download_historical_data('aapl')
         #print("\\")
+        
+    def test_load_from_csv(self):
+        x = fetcher.stock_api_data_collector_class()
+        print(x.load_csv('aapl'))

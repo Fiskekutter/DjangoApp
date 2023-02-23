@@ -3,10 +3,12 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.http import Http404
 from django.template import loader
 from django.urls import reverse
-from .models import Question, Choice, Stock, Stock_History, Tickers
+from .models import Question, Choice, Stock, Stock_History, Ticker
 from django.views import generic
 from django.utils import timezone
 from polls import fetcher
+from requests import exceptions
+from urllib import error
 
 
 class IndexView(generic.ListView):
@@ -55,47 +57,52 @@ def vote(request, question_id):
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
     
 class StockView(generic.ListView):
-    model = Tickers
+    model = Ticker
     template_name = 'polls/stock.html'
     context_object_name = "all_tickers"
     def __init__(self):
-        if Tickers.objects.exists() == False:
+        if Ticker.objects.exists() == False:
             fetch = fetcher.stock_api_data_collector_class()
             for item in fetch.ticker:
-                x = Tickers(sp500_tickers=item, price=fetch.get_current_stock_price(item))
+                x = Ticker(sp500_tickers=item)
                 x.save()           
     
     def get_queryset(self):
         fetch = fetcher.stock_api_data_collector_class()
-        items = Tickers.objects.all()
+        items = Ticker.objects.all()
         #for item in items[:5]:
             #item.price = fetch.get_current_stock_price(item.sp500_tickers)
             #item.save()
-        return Tickers.objects.all()
+        return Ticker.objects.all()
 
 class StockDetails(generic.ListView):
-    model = Tickers
+    model = Ticker
     template_name = 'polls/stockdetails.html'
     context_object_name = "symbols"
 
     def get_queryset(self):
-        self.symbol = get_object_or_404(Tickers, sp500_tickers=self.kwargs['sp500_tickers'])
-        stock = Tickers.objects.get(sp500_tickers=self.symbol)
+        self.symbol = get_object_or_404(Ticker, sp500_tickers=self.kwargs['sp500_tickers'])
+        symbol = Ticker.objects.get(symbol=self.symbol)
+        stock = Stock.objects.get(Ticker=symbol)
         fetch = fetcher.stock_api_data_collector_class()
-        stock.price = fetch.get_current_stock_price(stock.sp500_tickers)
-        stock.save()
-        return Tickers.objects.filter(sp500_tickers=self.symbol)
+        try:
+            stock.price = fetch.get_current_stock_price(symbol.symbol)
+        except(error.URLError):
+            raise Http404("Price update failed")
+        else:
+            stock.save()
+        return Ticker.objects.filter(sp500_tickers=self.symbol)
         
 def stockdetails(request, name):
-    ticker = get_object_or_404(Tickers, sp500_tickers=name)
+    ticker = get_object_or_404(Ticker, sp500_tickers=name)
     return HttpResponseRedirect(reverse('polls:stockdetails', args=(ticker.sp500_tickers,)))
 
 def search(request, name):
     try:
-        tick = Tickers.objects.filter(sp500_tickers=request.GET.get('search'))
-    except(Tickers.DoesNotExist):
+        tick = Ticker.objects.filter(sp500_tickers=request.GET.get('search'))
+    except(Ticker.DoesNotExist):
         fetch = fetcher.stock_api_data_collector_class()
         stock_info = fetch.get_stock_data
         
-    ticker = get_object_or_404(Tickers, sp500_tickers=name)
+    ticker = get_object_or_404(Ticker, sp500_tickers=name)
     return HttpResponseRedirect(reverse('polls:stockdetails', args=(ticker.sp500_tickers,)))
