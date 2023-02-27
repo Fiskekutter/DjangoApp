@@ -28,7 +28,6 @@ class Ticker(models.Model):
     
 class Stock(models.Model):
     ticker = models.ForeignKey(Ticker, on_delete=models.CASCADE)
-    #exchange = models.CharField(max_length=64)
     company_name = models.CharField(max_length=200)
     price = models.DecimalField(decimal_places=2, max_digits=20, default=0)
     last_updated = models.DateTimeField('Last Updated')
