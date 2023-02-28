@@ -9,12 +9,9 @@ import datetime
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import WebDriverException
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
-from selenium.webdriver.remote.webelement import WebElement
-import os
 import shutil
+import os
 
 
 class stock_api_data_collector_class(): #Yahoo
@@ -205,6 +202,6 @@ class iextrading_fetcher(): #Not developed
     url = "https://cloud.iexapis.com/stable/stock/aapl/quote?token=YOUR_TOKEN_HERE"
     
     
-class nasdaq_fetcher():
+class nasdaq_fetcher(): #Not developed
     symbol = ""
     price = 0

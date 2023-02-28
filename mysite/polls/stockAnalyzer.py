@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 
 
-class stockCalculator():
+class stockAnalyzer():
     earnings = 0
     book_value = 0
     cash_flow = 0
