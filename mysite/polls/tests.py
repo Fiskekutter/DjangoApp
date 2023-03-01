@@ -167,7 +167,7 @@ class test_api(TestCase):
     
     def test_tickers_sp500(self):
         x = fetcher.stock_api_data_collector_class()
-        #print(x.ticker)
+        print(x.get_tickers_and_company_name())
         
     def test_html_fetch(self):
         x = fetcher.stock_api_data_collector_class()
@@ -185,4 +185,4 @@ class test_api(TestCase):
         
     def test_load_from_csv(self):
         x = fetcher.stock_api_data_collector_class()
-        print(x.load_csv('aapl'))
+        #print(x.load_csv('aapl'))

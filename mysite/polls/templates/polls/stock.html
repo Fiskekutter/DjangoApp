@@ -18,12 +18,12 @@
         </div>
 
         <div class="ticker">
-            <h1 class="title">TICKERS</h1>
+            <h1 class="title">S&amp;P500 Tickers</h1>
                 {% if all_tickers %}
                 <ul>
                     <b>
                         {% for item in all_tickers %}
-                        <p><a href="{% url 'polls:test' item.sp500_tickers %}">{{ item.sp500_tickers }}</a></p>
+                        <p><a href="{% url 'polls:test' item.symbol %}">{{ item.symbol }}</a></p>
                         {% endfor %}
                     </b>
                 </ul>

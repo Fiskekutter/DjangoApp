@@ -18,27 +18,27 @@ class stock_api_data_collector_class(): #Yahoo
     _headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}
     url = "something"
     prefix = "#232"
-    ticker = []
-    start_date = '2010-01-01'
-    end_date = '2016-12-31'
     data = {}
     search_path = "C:\\Users\\45311\\Downloads\\"
     file_storage = "C:\\Users\\45311\\Documents\\Source\\DjangoApp\\mysite\\polls\\files\\"
     
-    def __init__(self):
-        self.get_tickers()
+    def __init__(self): #Might use later
+        pass
     
-    def get_tickers(self):
+    def get_tickers_and_company_name(self) -> list:
         table=pd.read_html('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies')
         df = table[0]
         dic = df.to_dict("list")
-        self.ticker = dic["Symbol"]
+        ticker = dic["Symbol"]
+        company_name = dic["Security"]
+        return list(zip(ticker, company_name))
+        
 
         
     def get_stock_data(self, ticker):
         self.data = self.transform_data(ticker)
              
-    def get_current_stock_price(self, ticker):
+    def get_current_stock_price(self, ticker) -> float:
         resp = requests.get(f'https://finance.yahoo.com/quote/{ticker}?p={ticker}', headers= self._headers)
         soup = BeautifulSoup(resp.content, "html.parser")
         value = soup.find_all('fin-streamer', class_="Fw(b) Fz(36px) Mb(-4px) D(ib)")

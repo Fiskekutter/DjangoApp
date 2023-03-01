@@ -11,8 +11,12 @@
     <div class="details">
         <ul>
         {% for item in symbols %}
-            <p>Stock Symbol: {{ item.sp500_tickers }}
-            <br>Current price: {{ item.price }}</p>
+        <p>
+                Stock Symbol: {{ item.symbol }}
+            <br>Current price: {{ item.stock.price }}
+            <br>Current price: {{ item.stock.companyname }}
+            <br>Current price: {{ item.stock.last_updated }}
+        </p>
         {% endfor %}
         </ul>
     </div>
